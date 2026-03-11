@@ -1,0 +1,267 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo span {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.logo-black {
+  color: #000;
+}
+
+.logo-green {
+  color: #22c55e;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  font-size: 15px;
+  transition: color 0.2s ease;
+}
+
+.nav-menu a:hover {
+  color: #22c55e;
+}
+
+a.sell-btn {
+  background-color: #4ad493;
+  color: #0f2236;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+
+}
+
+a.sell-btn:hover {
+  background-color: #30c880;
+  color: #000;
+
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 15px 0;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 8px 12px;
+  border-radius: 6px;
+  min-width: 416px;
+}
+
+.search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+  padding: 0;
+}
+
+.search-icon {
+  margin-right: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.signup-btn {
+  color: #030405;
+  background-color: #4ad493;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 122px;
+  height: 44px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  border-radius: 6px;
+}
+
+.signup-btn:hover {
+  background-color: #16a34a;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    align-items: flex-start;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  .user-section {
+    margin-top: 15px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/******************************************* Mobile Style *******************************************/
+
+.mobile-nav {
+  border: unset;
+  padding-bottom: 0 !important;
+
+  .ryt-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  button {
+    margin: 0;
+    padding: 0;
+  }
+
+  button.icon {
+    color: #262626;
+    background: transparent;
+    padding: 0px 6px;
+    border-radius: unset;
+    font-size: 20px;
+  }
+
+  .signup-btn-mob {
+    padding: 0;
+    width: 62px;
+    height: 28px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    border-radius: 8px;
+    background: #4ad493;
+    border-color: #4ad493;
+    color: #262626;
+  }
+
+  .header-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .auction-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: space-between;
+
+    .auction-highlight {
+      background-color: #262626;
+      padding: 10px 15px;
+      border-radius: 8px;
+      display: flex;
+      gap: 40px;
+      width: 80%;
+
+      .time-left,
+      .high-bid,
+      .bids,
+      .comments {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .time,
+      .bid-amount,
+      .bid-count,
+      .comment-count {
+        color: #fff;
+        font-weight: 500;
+        opacity: 1;
+      }
+
+      .place-bid {
+        font-weight: bold;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      span {
+        display: inline-block;
+        margin-right: 5px;
+        color: #fff;
+        opacity: 0.7;
+        font-weight: normal;
+
+        i {
+          color: #fff;
+          opacity: 0.7;
+        }
+      }
+    }
+
+    .btn {
+      color: #030405;
+      background-color: #4ad493;
+      flex-grow: 0;
+      flex-shrink: 0;
+      padding: 12px 20px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+      margin: 0;
+      border-radius: 6px;
+      width: 20%;
+    }
+  }
+
+}
+
+@media(max-width:1024px) {
+  header.main-header {
+    display: none;
+  }
+
+  header.mobile-nav {
+    padding: 10px;
+    display: block;
+
+  }
+}
