@@ -1,0 +1,205 @@
+.vehicle-listings-wrapper {
+  padding: 20px;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  margin-top: -62px;
+
+  .section-title {
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .vehicle-new-listings {
+    span.featured-badge {
+      background-color: #5b30d6;
+      text-transform: uppercase;
+      color: #fff;
+      bottom: 10px;
+      left: 10px;
+      top: unset;
+      right: unset;
+    }
+  }
+
+}
+
+.vehicle-grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* VEHICLE CARD */
+.vehicle-card {
+  background: #fff;
+  overflow: hidden;
+  transition: 0.2s ease;
+  cursor: pointer;
+  width: 48%;
+  position: relative;
+  margin-bottom: 30px;
+
+  &:hover {
+    // transform: translateY(-4px);
+    // box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+
+  .main-vehicle-card {
+    position: relative;
+  }
+
+  .vehicle-features {
+    margin: 8px 0 0;
+    padding-left: 20px;
+    color: #444;
+    font-size: 14px;
+
+    li {
+      margin-bottom: 3px;
+    }
+  }
+
+  .vehicle-features {
+    margin: 8px 0 0;
+    padding-left: 20px;
+    color: #444;
+    font-size: 14px;
+
+    li {
+      margin-bottom: 3px;
+      font-size: 14px;
+      line-height: 1;
+    }
+  }
+
+}
+
+.vehicle-img {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 3px;
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: hsla(0, 0%, 100%, .6);
+    color: #000;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+}
+
+/* TIME + BID ROW */
+.time-bid-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 10px;
+  font-size: 14px;
+  background: #262626;
+  border-radius: 5px;
+  width: max-content;
+  gap: 18px;
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+
+  .time {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #fff;
+    opacity: 1;
+
+    i {
+      margin-right: 5px;
+      color: #fff;
+      opacity: 0.7;
+    }
+  }
+
+  p {
+    color: #fff;
+    opacity: 1;
+    display: flex;
+    gap: 4px;
+
+    .bid {
+      background: #222;
+      color: #fff;
+      opacity: 0.7;
+      border-radius: 4px;
+    }
+
+    span {
+      opacity: 1;
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+}
+
+/* TEXT INFO */
+.vehicle-title {
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 5px;
+  font-size: 14px;
+  line-height: 17px;
+  padding-top: 10px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.vehicle-specs {
+  font-size: 14px;
+  color: #000;
+  display: inline;
+}
+
+/* TAGS (NO RESERVE, INSPECTED) */
+.tags {
+  display: inline;
+
+  .tag {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 10px 0 0;
+
+    &.blue {
+      background: #5ca1ff;
+    }
+
+    &.grey {
+      background: #e4e7ed;
+      color: #000;
+    }
+  }
+}
+
+/* LOCATION */
+.location {
+  padding: 0;
+  font-size: 14px;
+  color: #777;
+}
