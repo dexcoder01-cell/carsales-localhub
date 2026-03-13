@@ -3,10 +3,10 @@
 import Image from "next/image";
 import "./style.scss";
 import Avatar from "./images/dougs.png";
-// import AuctionCarVideos from "../AuctionCarVideos/component";
-// import SellerQA from "../SellerQA/component";
-// import AuctionMainInfo from "../AuctionMainInfo/component";
-// import AuctionCommentsAndBids from "../AuctionCommentsAndBids/component";
+import AuctionCarVideos from "../AuctionCarVideos/component";
+import SellerQA from "../SellerQA/component";
+import AuctionMainInfo from "../AuctionMainInfo/component";
+import AuctionCommentsAndBids from "../AuctionCommentsAndBids/component";
 
 export default function VehicleDetails() {
   return (
@@ -218,10 +218,10 @@ export default function VehicleDetails() {
         <p>The seller purchased this M3 on Cars & Bids in October 2021 and has added approximately 17,600 miles since. The previous auction is viewable <a href="#">here.</a></p>
       </div>
 
-      {/* <AuctionCarVideos />
+      <AuctionCarVideos />
       <SellerQA />
       <AuctionMainInfo />
-      <AuctionCommentsAndBids /> */}
+      <AuctionCommentsAndBids />
     </div>
   );
 }

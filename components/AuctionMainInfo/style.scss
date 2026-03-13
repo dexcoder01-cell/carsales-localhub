@@ -1,0 +1,254 @@
+.auction-main-wrapper {
+  width: 100%;
+  margin-bottom: 25px;
+
+  .banner-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 60px;
+  }
+
+  .banner-item {
+    display: flex;
+    gap: 20px;
+    width: 50%;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    background: linear-gradient(0deg, rgba(247, 252, 249, 0.5), rgba(247, 252, 249, 0.5)), linear-gradient(180deg, rgba(240, 243, 210, 0), rgba(240, 243, 210, 0.46)), #eaf6ef;
+
+    h3 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+    }
+
+    &.shipping {
+      position: relative;
+    }
+
+    a,
+    p,
+    p strong {
+      font-size: 13px;
+    }
+
+    img {
+      width: 40px;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  .auction-title {
+    margin: 15px 0;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .bid-box {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    background: #fff;
+    flex-wrap: wrap;
+    overflow: hidden;
+
+    img {
+      width: 20px;
+    }
+
+    .left {
+      width: 50%;
+      padding-left: 20px;
+      padding-top: 20px;
+
+      .label {
+        font-size: 15px;
+        margin-bottom: 5px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .user {
+          margin-left: 5px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          img {
+            width: 20px;
+          }
+        }
+      }
+
+      .price {
+        font-size: 64px;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+    }
+
+    .right {
+      width: 40%;
+      font-size: 15px;
+      padding-right: 20px;
+      padding-top: 20px;
+
+      img {
+        width: 20px;
+      }
+
+      p {
+        margin: 6px 0;
+      }
+
+      .contact {
+        margin-left: 10px;
+        background-color: rgba(74, 212, 147, .06);
+        border-radius: 10px;
+        color: #3db07a;
+        text-decoration: underline;
+      }
+
+      table {
+        tr {
+          th {
+            text-align: left;
+            padding: 3px;
+          }
+
+          td {
+            width: 210px;
+            text-align: left;
+            padding: 3px 3px 3px 20px;
+          }
+        }
+      }
+    }
+
+    .grey-bar {
+      background: #eeeef0;
+      width: 100%;
+      padding: 8px 0 8px 8px;
+      margin-top: 16px;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+
+      .place-bid-btn {
+        padding: 13px 25px;
+        background: #fff;
+        color: #3db07a;
+        border: 1px solid #d5d5d5;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .small-links {
+        display: flex;
+        gap: 15px;
+        width: 80%;
+        justify-content: space-around;
+
+        a {
+          font-size: 14px;
+          color: #000;
+          font-weight: 400;
+        }
+      }
+
+    }
+  }
+}
+
+@media(max-width:1024px) {
+  .banner-row {
+    flex-direction: column;
+  }
+
+  .auction-main-wrapper .banner-item {
+    width: 100%;
+  }
+
+  .auction-main-wrapper .auction-title {
+    font-size: 20px;
+  }
+
+  .auction-main-wrapper .bid-box {
+    border-left: unset;
+    border-right: unset;
+    border-radius: 0px;
+    border-bottom: unset;
+    padding: 20px 0;
+
+    .left {
+      width: 100%;
+      padding-left: 0px;
+      padding-top: 0px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      .price {
+        font-size: 15px;
+        margin-bottom: 0px;
+      }
+
+      .label .user {
+        padding: 3px 3px 3px 30px;
+        margin: 0;
+      }
+    }
+
+    .right {
+      width: 100%;
+      font-size: 15px;
+      padding-right: 0px;
+      padding-top: 0px;
+
+      table tr td {
+        width: 100%;
+        text-align: left;
+        padding: 3px 3px 3px 40px;
+      }
+    }
+
+    .grey-bar {
+      background: transparent;
+
+      .place-bid-btn {
+        display: none;
+      }
+
+      .small-links a:first-child {
+        display: none;
+      }
+
+      .small-links {
+        justify-content: space-between;
+        width: 100%;
+        border-top: 1px solid #e3e3e3;
+        padding-top: 20px;
+
+        a {
+          background-color: #f1f3f4;
+          padding: 10px;
+          border-radius: 10px;
+          padding: 10px 20px;
+        }
+      }
+    }
+  }
+
+}

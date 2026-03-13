@@ -4,7 +4,7 @@ import Footer from "@/components/Footer/component";
 import Gallery from "@/components/Gallery/lightboxGallery";
 import GalleryMob from "@/components/Gallery/lightboxGalleryMob";
 import VehicleDetails from "@/components/VehicleDetails/component";
-// import AuctionCars from "@/components/AuctionCars/component";
+import AuctionCars from "@/components/AuctionCars/component";
 
 import "./style.scss";
 
@@ -18,7 +18,7 @@ export default function AllCars() {
         <Gallery />
         <div className="details">
           <VehicleDetails />
-          {/* <AuctionCars /> */}
+          <AuctionCars />
         </div>
       </div>
       <Footer />
