@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import "./style.scss";
-import AuctionNewCars from "../AuctionNewCars/component";
+import "../AuctionCars/style.scss";
 
 // Assets
 import Img1 from "./images/1.jpg";
@@ -11,11 +10,6 @@ import Img3 from "./images/3.jpg";
 import Img4 from "./images/4.jpg";
 import Img5 from "./images/5.jpg";
 import Img6 from "./images/6.jpeg";
-import Img7 from "./images/7.jpeg";
-import Img8 from "./images/8.jpeg";
-import Img9 from "./images/9.jpeg";
-import Img10 from "./images/10.jpeg";
-import Img11 from "./images/11.jpeg";
 
 const vehicles = [
   {
@@ -24,101 +18,60 @@ const vehicles = [
     location: "Alpharetta, GA 30009",
     mileage: "~32,800 Miles",
     details: "7-Speed PDK, 408-hp Flat-6, Aerokit",
-    bid: "$88,500",
-    time: "13:11:21",
     featured: true,
     img: Img1,
+    features: ["Clean title", "Serviced recently", "Garage kept"],
   },
   {
     id: 2,
     title: "2021 BMW M2 Competition",
     location: "San Jose, CA 95125",
     details: "6-Speed Manual, 405-hp Turbo 6-Cylinder, Executive Package",
-    bid: "$40,000",
-    time: "13:16:21",
+    featured: true,
     noReserve: true,
     inspected: true,
     img: Img2,
+    features: ["Clean title", "Serviced recently", "Garage kept"],
   },
   {
     id: 3,
     title: "2007 Chevrolet Corvette Z06 Coupe",
     mileage: "1 Owner, 6-Speed Manual",
     details: "7.0-Liter V8 Power",
-    bid: "$29,350",
-    time: "13:21:21",
+    featured: true,
     img: Img3,
+    features: ["Clean title", "Serviced recently", "Garage kept"],
   },
   {
     id: 4,
     title: "2000 Toyota Land Cruiser ZX",
     mileage: "Japanese-Market SUV, Diesel 6-Cylinder, 4WD, U.S. Title",
-    bid: "$14,900",
-    time: "13:26:21",
     img: Img4,
+    featured: true,
+    features: ["Clean title", "Serviced recently", "Garage kept"],
   },
   {
     id: 5,
     title: "2000 Toyota Land Cruiser ZX",
     mileage: "Japanese-Market SUV, Diesel 6-Cylinder, 4WD, U.S. Title",
-    bid: "$14,900",
-    time: "13:26:21",
     img: Img5,
+    featured: true,
+    features: ["Clean title", "Serviced recently", "Garage kept"],
   },
   {
     id: 6,
     title: "2000 Toyota Land Cruiser ZX",
     mileage: "Japanese-Market SUV, Diesel 6-Cylinder, 4WD, U.S. Title",
-    bid: "$14,900",
-    time: "13:26:21",
     img: Img6,
-  },
-  {
-    id: 7,
-    title: "2000 Toyota Land Cruiser ZX",
-    mileage: "Japanese-Market SUV, Diesel 6-Cylinder, 4WD, U.S. Title",
-    bid: "$14,900",
-    time: "13:26:21",
-    img: Img7,
-  },
-  {
-    id: 8,
-    title: "2000 Toyota Land Cruiser ZX",
-    mileage: "Japanese-Market SUV, Diesel 6-Cylinder, 4WD, U.S. Title",
-    bid: "$14,900",
-    time: "13:26:21",
-    img: Img8,
-  },
-  {
-    id: 9,
-    title: "2000 Toyota Land Cruiser ZX",
-    mileage: "Japanese-Market SUV, Diesel 6-Cylinder, 4WD, U.S. Title",
-    bid: "$14,900",
-    time: "13:26:21",
-    img: Img9,
-  },
-  {
-    id: 10,
-    title: "2000 Toyota Land Cruiser ZX",
-    mileage: "Japanese-Market SUV, Diesel 6-Cylinder, 4WD, U.S. Title",
-    bid: "$14,900",
-    time: "13:26:21",
-    img: Img10,
-  },
-  {
-    id: 11,
-    title: "2000 Toyota Land Cruiser ZX",
-    mileage: "Japanese-Market SUV, Diesel 6-Cylinder, 4WD, U.S. Title",
-    bid: "$14,900",
-    time: "13:26:21",
-    img: Img11,
+    featured: true,
+    features: ["Clean title", "Serviced recently", "Garage kept"],
   },
 ];
 
 export default function AuctionCars() {
   return (
-    <div className="vehicle-listings-wrapper">
-      <h2 className="section-title">Auctions ending soon</h2>
+    <div className="vehicle-new-listings">
+      <h2 className="section-title">New Listings</h2>
 
       <div className="vehicle-grid">
         {vehicles.map((car) => (
@@ -136,22 +89,9 @@ export default function AuctionCars() {
                 />
 
                 {car.featured && (
-                  <span className="featured-badge">FEATURED</span>
+                  <span className="featured-badge">New</span>
                 )}
               </div>
-
-              {/* Time + Bid */}
-              <div className="time-bid-row">
-                <p className="time">
-                  <i className="fa-regular fa-clock"></i> {car.time}
-                </p>
-
-                <p>
-                  <span className="bid">Bid </span>
-                  <span>{car.bid}</span>
-                </p>
-              </div>
-
             </div>
 
             {/* Title */}
@@ -169,6 +109,15 @@ export default function AuctionCars() {
               {car.details}
             </p>
 
+            {/* Features */}
+            {car.features && (
+              <ul className="vehicle-features">
+                {car.features.map((feature, index) => (
+                  <li key={index}>{feature}</li>
+                ))}
+              </ul>
+            )}
+
             {/* Location */}
             {car.location && (
               <p className="location">{car.location}</p>
@@ -176,8 +125,6 @@ export default function AuctionCars() {
           </div>
         ))}
       </div>
-
-      <AuctionNewCars />
     </div>
   );
 }
