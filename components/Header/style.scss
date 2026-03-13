@@ -265,3 +265,20 @@ a.sell-btn:hover {
 
   }
 }
+
+header.main-header.mobile-nav,
+.main-car-section {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+
+  header.main-header.mobile-nav,
+  .main-car-section {
+    display: block;
+  }
+
+  header.main-header {
+    display: none;
+  }
+}
