@@ -163,6 +163,7 @@
           width: 35px;
           height: 35px;
           border-radius: 50%;
+          max-width: unset;
         }
 
         i {
@@ -257,4 +258,98 @@
       }
     }
   }
+}
+
+
+
+
+.container {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  font-family: Arial, sans-serif;
+}
+
+h1,
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.form-box {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+input,
+textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  padding: 10px 16px;
+  margin: 5px 5px 0 0;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.error {
+  color: red;
+  margin-top: -6px;
+  font-size: 0.9em;
+}
+
+.car-list {
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.car-list li {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.multistep-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.form-step {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-step input {
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.form-step button {
+  margin-top: 10px;
+  padding: 10px;
+  background: #20232a;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
