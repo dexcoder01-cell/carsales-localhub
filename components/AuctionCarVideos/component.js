@@ -6,7 +6,7 @@ import "./style.scss";
 const videos = [
   { id: 1, src: "/videos/car.mp4" },
   { id: 2, src: "/videos/car.mp4" },
-  { id: 3, src: "/videos/car.mp4" },
+  { id: 3, src: "videos/car.mp4" },
   { id: 4, src: "/videos/car.mp4" },
   { id: 5, src: "/videos/car.mp4" },
   { id: 6, src: "/videos/car.mp4" },
