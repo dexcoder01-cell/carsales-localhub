@@ -7,7 +7,7 @@ const AuctionCommentsAndBids = () => {
     <div className="auction-comments-and-bids">
       <div className="comment-field">
         <div className="comment-bar">
-          <h3>Comments & Bids</h3>
+          <h3>Comments & Bids 123</h3>
           <div className="dropdown">
             <button>Newest</button>
             <button>Most Upvoted</button>
