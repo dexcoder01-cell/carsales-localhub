@@ -28,7 +28,7 @@ export default function Dashboard() {
         {/* <Navbar /> */}
         <div style={{ padding: "20px" }}>
           {/* <CarForm /> */}
-          <h1>Hello</h1>
+          <h1>Hello world</h1>
         </div>
       </div>
     </div>
