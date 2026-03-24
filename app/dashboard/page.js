@@ -4,7 +4,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/Auth/AuthContext";
-// import Sidebar from "./Sidebar";
+import Sidebar from "@/components/Sidebar/component";
 // import Navbar from "./Navbar";
 // import CarForm from "../pages/InsertCar/page";
 // import "../style/Dashboard.css";
@@ -23,12 +23,11 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      {/* <Sidebar /> */}
+      <Sidebar />
       <div className="main-content">
         {/* <Navbar /> */}
         <div style={{ padding: "20px" }}>
           {/* <CarForm /> */}
-          <h1>Hello world</h1>
         </div>
       </div>
     </div>
