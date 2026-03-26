@@ -1,0 +1,512 @@
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+
+  .car-bio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .details {
+      display: unset;
+
+      h2 {
+        text-align: left;
+      }
+    }
+
+    .btns {
+      button {
+        background-color: #f1f3f4;
+        color: #262626;
+        font-weight: 600;
+        font-size: 15px;
+
+        img {
+          padding-right: 7px;
+        }
+      }
+    }
+  }
+
+
+  .carfax-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    max-width: 900px;
+    color: #222;
+    justify-content: space-between;
+
+    span.ending {
+      color: #828282;
+      font-size: 16px;
+    }
+
+    img {
+      background: #f1f3f4;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  }
+
+  .gallery-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4px;
+    max-width: 1400px;
+    margin: 20px auto 0;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .main-image {
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+      }
+    }
+
+    /* Thumbnails */
+    .thumbnail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 4px;
+
+      .thumb {
+        position: relative;
+        cursor: pointer;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+
+        // &:hover img {
+        //   transform: scale(1.05);
+        // }
+
+        /* ✅ Fixed Label */
+        .fixed-label {
+          position: absolute;
+          top: 8px;
+          left: 8px;
+          background: rgba(0, 0, 0, 0.7);
+          color: #fff;
+          padding: 4px 10px;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          z-index: 2;
+        }
+
+        /* Overlay for All Photos */
+        .overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.6);
+          border-radius: 6px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          span {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  .breadcrumb {
+    padding: 10px 0;
+
+    ul {
+      display: flex;
+      list-style-type: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+
+      img {
+        width: 6px;
+      }
+
+      li {
+        a {
+          color: #999;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .close,
+    .prev,
+    .next {
+      position: absolute;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        color: #ffcc00;
+      }
+    }
+
+    .close {
+      top: 20px;
+      right: 30px;
+    }
+
+    .prev {
+      left: 50px;
+    }
+
+    .next {
+      right: 50px;
+    }
+  }
+
+  /* All Photos Overlay */
+  .all-photos-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+
+    .all-photos-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      background-color: #000;
+      border-bottom: 1px solid #333;
+
+      .tabs {
+        span {
+          margin-right: 25px;
+          cursor: pointer;
+          color: #aaa;
+          font-size: 1rem;
+
+          &.active {
+            color: #fff;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .controls {
+        button {
+          background: transparent;
+          color: #fff;
+          font-size: 2rem;
+          border: none;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .all-photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 12px;
+      padding: 20px;
+      overflow-y: scroll;
+
+      .photo-item {
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 6px;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+          transform: scale(1.05);
+        }
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .gallery-wrapper {
+      grid-template-columns: 1fr;
+
+      .thumbnail-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+
+  .auction-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 900px;
+    justify-content: space-between;
+
+    .auction-highlight {
+      background-color: #262626;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      display: flex;
+      gap: 20px;
+      width: max-content;
+
+      .time-left,
+      .high-bid,
+      .bids,
+      .comments {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .time,
+      .bid-amount,
+      .bid-count,
+      .comment-count {
+        color: #fff;
+        font-weight: bold;
+        opacity: 1;
+      }
+
+      .place-bid {
+        font-weight: bold;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      span {
+        display: inline-block;
+        margin-right: 5px;
+        color: #fff;
+        opacity: .7;
+        font-weight: normal;
+
+        i {
+          color: #fff;
+          opacity: .7;
+        }
+      }
+    }
+  }
+
+  .btn {
+    color: #030405;
+    background-color: #4ad493;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 12px 20px;
+    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    margin: 0;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .page-container .gallery-wrapper {
+margin: 0;
+  }
+  .main-top {
+    display: none;
+  }
+  .main-car-section {
+    .car-bio {
+      padding-top: 20px;
+      align-items: start !important;
+
+      .details {
+
+
+        h2 {
+          font-size: 20px;
+        }
+
+        p {
+          font-size: 17px;
+          padding: 5px 0;
+        }
+      }
+
+      .btns button {
+        background-color: transparent !important;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .carfax-header {
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      padding-bottom: 0;
+
+      button.secondary-btn {
+        background-color: #f1f3f4;
+        color: #262626;
+        font-weight: 600;
+        font-size: 15px;
+        margin: 0;
+      }
+
+      img,
+      button {
+        width: 48%;
+      }
+
+      button {
+        height: 50px;
+        border-radius: 10px;
+      }
+
+      span.ending {
+        width: 100%;
+        padding-bottom: 10px;
+
+
+      }
+    }
+
+  }
+}
+
+
+.single-template {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 10px;
+
+  .thumb {
+    height: auto;
+  }
+
+  .car-bio {
+    .details {
+      display: flex;
+      gap: 30px;
+    }
+  }
+
+  .sub-details {
+    display: flex;
+
+    .tags {
+
+      .tag {
+        font-size: 10px;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        color: #fff;
+        margin: 0 10px 0 0;
+
+        &.blue {
+          background: #5ca1ff;
+          color: white;
+        }
+
+        &.grey {
+          background: #e4e7ed;
+          color: #000;
+        }
+      }
+    }
+  }
+
+  .auction-details {
+    display: flex;
+    gap: 30px;
+  }
+  .vehicle-listings-wrapper h2.section-title {
+    display: block;
+  }
+}
+
+
+/* Responsive */
+@media (max-width: 900px) {
+  .single-page-container {
+    .gallery-wrapper {
+      grid-template-columns: 1fr;
+
+      .thumbnail-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .car-bio {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+
+      .btns {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+
+    .auction-bar {
+      flex-direction: column;
+      gap: 15px;
+      align-items: flex-start;
+
+      .auction-highlight {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  }
+}
+
