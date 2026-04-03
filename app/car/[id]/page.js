@@ -9,7 +9,7 @@ import VehicleDetails from "../../../components/VehicleDetails/new_component";
 import Header from "../../../components/Header/navbar";
 import Footer from "../../../components/Footer/component";
 import HeaderMobile from "../../../components/Header/mobileNavbar";
-import AuctionCars from "../../../components/AuctionCars/component";
+import AuctionCars from "../../../components/AuctionCars/component_updated";
 
 // Import images correctly for Next.js
 import Star from "../images/star.png";
@@ -111,7 +111,7 @@ export default function CarDetail({ params }) {
         <div className="main-top">
           <div className="car-bio">
             <div className="details">
-              <h2>{car.name}</h2>
+              <h2 className="car-title">{car.name}</h2>
               <div className="sub-details">
                 <p className="tags">
                   <span className="tag blue">{car.reserveStatus || "NO RESERVE"}</span>
@@ -196,10 +196,10 @@ export default function CarDetail({ params }) {
           {/* Auction Details */}
           <div className="auction-bar">
             <div className="auction-highlight">
-              <div className="time-left">Time Left: {car.timeLeft || "11:26:10"}</div>
-              <div className="high-bid">High Bid: ${car.highBid || car.price || "9,800"}</div>
-              <div className="bids">Bids: {car.bidCount || 14}</div>
-              <div className="comments">Comments: {car.commentCount || 20}</div>
+              <div className="time-left"><span>Time Left:</span> {car.timeLeft || "11:26:10"}</div>
+              <div className="high-bid"><span>High Bid:</span> ${car.highBid || car.price || "9,800"}</div>
+              <div className="bids"><span>Bids:</span> {car.bidCount || 14}</div>
+              <div className="comments"><span>Comments:</span> {car.commentCount || 20}</div>
             </div>
             <button className="place-bid btn">Place Bid</button>
           </div>

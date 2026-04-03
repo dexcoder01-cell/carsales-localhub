@@ -30,6 +30,44 @@ export default function AuctionCars() {
     router.push(`/car/${id}`);
   };
 
+  // Helper function to format mileage
+  const formatMileage = (mileage) => {
+    if (!mileage) return null;
+    return `${mileage.toLocaleString()} miles`;
+  };
+
+  // Helper function to get specs string
+  const getSpecsString = (car) => {
+    const specs = [];
+    if (car.mileage) specs.push(formatMileage(car.mileage));
+    if (car.transmission) specs.push(car.transmission);
+    if (car.engine) specs.push(car.engine);
+    if (car.drivetrain) specs.push(car.drivetrain);
+    return specs.join(" , ");
+  };
+
+  // Helper function to format time left
+  const formatTimeLeft = (car) => {
+    if (car.timeLeft) return car.timeLeft;
+    
+    // If you have auction end date, calculate time left
+    if (car.auctionEndDate) {
+      const end = new Date(car.auctionEndDate);
+      const now = new Date();
+      const diff = end - now;
+      
+      if (diff <= 0) return "Ended";
+      
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (3600000)) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    return "00:00:00";
+  };
+
   if (loading) {
     return <div className="vehicle-listings-wrapper">Loading...</div>;
   }
@@ -44,72 +82,107 @@ export default function AuctionCars() {
             className="vehicle-card"
             key={car._id}
             onClick={() => handleCardClick(car._id)}
+            style={{ cursor: "pointer" }}
           >
             <div className="main-vehicle-card">
-
-              {/* Image */}
+              {/* Image - Using regular img tag */}
               <div className="vehicle-img">
-                {car.images?.length > 0 && (
+                {car.images?.length > 0 ? (
                   <img
                     src={`http://localhost:5000/uploads/${car.images[0]}`}
-                    alt={car.name}
+                    alt={car.name || "Car image"}
                     className="car-image"
+                    style={{ width: '100%', height: '250px', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://via.placeholder.com/400x250?text=No+Image";
+                    }}
                   />
+                ) : (
+                  <div className="no-image-placeholder">
+                    No Image Available
+                  </div>
                 )}
 
-                {car.featured && (
+                {/* Featured Badge */}
+                {/* {car.featured && (
                   <span className="featured-badge">FEATURED</span>
-                )}
+                )} */}
+                
+                {/* Show NO RESERVE badge on image if reserveStatus is NO RESERVE */}
+                {/* {car.reserveStatus === "NO RESERVE" && !car.featured && (
+                  <span className="featured-badge" style={{ background: "#4CAF50" }}>
+                    NO RESERVE
+                  </span>
+                )} */}
               </div>
 
               {/* Time + Bid */}
               <div className="time-bid-row">
                 <p className="time">
-                  <i className="fa-regular fa-clock"></i>{" "}
-                  {car.time || "00:00:00"}
+                  <i className="fa-regular fa-clock"></i> {formatTimeLeft(car)}
                 </p>
 
                 <p>
                   <span className="bid">Bid </span>
                   <span>
-                    ₹{car.price ? car.price.toLocaleString() : "0"}
+                    ₹{(car.highBid || car.price || 0).toLocaleString()}
                   </span>
                 </p>
               </div>
-
             </div>
 
             {/* Title */}
             <h3 className="vehicle-title">
-              {car.name || "Untitled Car"}
+              {car.name || `${car.make || ""} ${car.model || ""}`.trim() || "Untitled Car"}
             </h3>
 
             {/* Tags */}
             <p className="tags">
-              {car.noReserve && (
+              {car.reserveStatus === "NO RESERVE" && (
                 <span className="tag blue">NO RESERVE</span>
               )}
-              {car.inspected && (
+              {car.inspectionStatus === "INSPECTED" && (
                 <span className="tag grey">INSPECTED</span>
+              )}
+              {car.auctionStatus === "Active" && (
+                <span className="tag green">ACTIVE</span>
               )}
             </p>
 
             {/* Specs */}
             <p className="vehicle-specs">
-              {car.mileage && <>{car.mileage}, </>}
-              {car.model || ""}
+              {getSpecsString(car) || "No specs available"}
             </p>
 
             {/* Location */}
             {car.location && (
-              <p className="location">{car.location}</p>
+              <p className="location">
+                <i className="fa-regular fa-location-dot"></i> {car.location}
+              </p>
             )}
+            
+            {/* Optional: Show bid count and comments count */}
+            {/* {(car.bidCount > 0 || car.commentCount > 0) && (
+              <div className="bid-comment-stats">
+                {car.bidCount > 0 && (
+                  <span>
+                    <i className="fa-solid fa-hashtag"></i> {car.bidCount} bids
+                  </span>
+                )}
+                {car.commentCount > 0 && (
+                  <span>
+                    <i className="fa-regular fa-comment"></i> {car.commentCount} comments
+                  </span>
+                )}
+              </div>
+            )} */}
           </div>
         ))}
       </div>
 
       {/* KEEP THIS AS IT IS */}
-      <AuctionNewCars />
+      {/* <AuctionNewCars /> */}
     </div>
   );
 }

@@ -1,4 +1,3 @@
-
 .page-container {
   display: flex;
   flex-direction: column;
@@ -11,17 +10,23 @@
     .details {
       display: unset;
 
-      h2 {
+      h2.car-title {
         text-align: left;
+        font-size: 22px;
+        font-weight: bold;
       }
     }
 
     .btns {
+      display: flex;
+
       button {
         background-color: #f1f3f4;
         color: #262626;
         font-weight: 600;
         font-size: 15px;
+        width: 130px;
+        display: flex;
 
         img {
           padding-right: 7px;
@@ -56,7 +61,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 4px;
-    max-width: 1400px;
+    max-width: 1500px;
     margin: 20px auto 0;
     border-radius: 5px;
     overflow: hidden;
@@ -304,17 +309,28 @@
       .comments {
         font-size: 18px;
         font-weight: bold;
-        color: #333;
-      }
-
-      .time,
-      .bid-amount,
-      .bid-count,
-      .comment-count {
         color: #fff;
-        font-weight: bold;
         opacity: 1;
       }
+
+      .time-left span,
+      .high-bid span,
+      .bids span,
+      .comments span {
+        font-size: 18px;
+        font-weight: 300;
+        color: #fff;
+        opacity: 0.7;
+      }
+
+      // .time,
+      // .bid-amount,
+      // .bid-count,
+      // .comment-count {
+      //   color: #fff;
+      //   font-weight: bold;
+      //   opacity: 1;
+      // }
 
       .place-bid {
         font-weight: bold;
@@ -356,11 +372,13 @@
 
 @media (max-width: 1024px) {
   .page-container .gallery-wrapper {
-margin: 0;
+    margin: 0;
   }
+
   .main-top {
     display: none;
   }
+
   .main-car-section {
     .car-bio {
       padding-top: 20px;
@@ -423,7 +441,7 @@ margin: 0;
 
 
 .single-template {
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 0 auto;
   padding-top: 10px;
 
@@ -433,7 +451,7 @@ margin: 0;
 
   .car-bio {
     .details {
-      display: flex;
+      display: block;
       gap: 30px;
     }
   }
@@ -468,8 +486,15 @@ margin: 0;
     display: flex;
     gap: 30px;
   }
+
   .vehicle-listings-wrapper h2.section-title {
     display: block;
+  }
+
+  .vehicle-listings-wrapper {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
   }
 }
 
@@ -493,6 +518,7 @@ margin: 0;
       .btns {
         width: 100%;
         justify-content: flex-start;
+        display: flex;
       }
     }
 
@@ -510,3 +536,21 @@ margin: 0;
   }
 }
 
+body {
+  .page-container.single-template.single-page {
+    .vehicle-listings-wrapper {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      .vehicle-card {
+    cursor: pointer;
+    background: #fff;
+    width: 48%;
+    margin-bottom: 30px;
+    transition: all .2s;
+    position: relative;
+    overflow: hidden;
+}
+    }
+  }
+}

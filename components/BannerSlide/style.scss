@@ -1,0 +1,353 @@
+.featured-gallery {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 30px;
+  width: 100%;
+
+  .main-image-container {
+    flex: 2;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .main-featured-image {
+      object-fit: cover;
+      width: 100%;
+      height: 400px;
+      transition: transform .3s;
+    }
+
+    // &:hover .main-featured-image {
+    //   transform: scale(1.05);
+    // }
+
+    // Car Details Overlay - Top Right
+    .car-details-overlay {
+      color: #fff;
+      text-align: right;
+      pointer-events: none;
+      z-index: 2;
+      max-width: 300px;
+      padding: 0px 15px;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+
+
+      .featured-badge {
+        display: inline-block;
+        background: #ff6b6b;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+      }
+
+      .car-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 10px 0 5px;
+        line-height: 1.2;
+        color: #fff;
+      }
+
+      .car-specs {
+        font-size: 14px;
+        color: #fff;
+        margin: 5px 0;
+      }
+
+      .car-model-trim {
+        font-size: 16px;
+        font-weight: 500;
+        color: #ff6b6b;
+        margin: 5px 0 10px;
+      }
+
+      .auction-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+        .time-left {
+          font-size: 14px;
+          font-family: monospace;
+          letter-spacing: 1px;
+
+          i {
+            margin-right: 5px;
+          }
+        }
+
+        .bid-amount {
+          font-size: 20px;
+          font-weight: bold;
+          color: #4CAF50;
+        }
+      }
+    }
+  }
+
+  .thumbnail-grid {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    .thumbnail-item {
+      width: 49%;
+      cursor: pointer;
+      overflow: hidden;
+
+      .thumbnail-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      // &:hover .thumbnail-image {
+      //   transform: scale(1.1);
+      // }
+
+      &.placeholder {
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .placeholder-image {
+          color: #999;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+
+/* ---------- FILTER BAR ---------- */
+.filters-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  align-items: center;
+  width: 100%;
+}
+
+.left-filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  .filter-item {
+    padding: 10px 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+}
+
+.right-tabs {
+  display: flex;
+  gap: 22px;
+
+  .tab {
+    cursor: pointer;
+    font-size: 15px;
+    color: #666;
+    padding-bottom: 3px;
+  }
+
+  .tab.active {
+    color: black;
+    font-weight: 600;
+    border-bottom: 2px solid black;
+  }
+}
+
+/* DROPDOWN CONTAINER */
+.dropdown-box {
+  position: relative;
+}
+
+/* Button */
+.filter-item {
+  padding: 10px 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+  font-size: 14px;
+  user-select: none;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 180px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+}
+
+.dropdown-option {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dropdown-option:hover {
+  background: #f2f2f2;
+}
+
+
+.loading-placeholder,
+.no-car-placeholder {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  color: #999;
+  font-size: 16px;
+  border-radius: 12px;
+}
+
+
+@media (max-width: 1024px) {
+  .filters-section {
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
+
+  .left-filters {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .right-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    gap: 12px;
+    padding-top: 10px;
+
+    span {
+      white-space: nowrap;
+      padding: 6px 0;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .left-filters h1 {
+    width: 100%;
+    text-align: left;
+    font-size: 22px;
+
+    i {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-gallery {
+    flex-direction: column;
+
+    .main-image-container {
+      .main-featured-image {
+        height: 300px;
+      }
+
+      .car-details-overlay {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-top: 10px;
+        background: rgba(0, 0, 0, 0.9);
+        max-width: 100%;
+        text-align: left;
+
+        .car-title {
+          font-size: 20px;
+        }
+
+        .bid-amount {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .thumbnail-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .thumbnail-item {
+        width: calc(25% - 7.5px);
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-gallery {
+    .thumbnail-grid {
+      .thumbnail-item {
+        width: calc(50% - 5px);
+      }
+    }
+  }
+}
+
+.home-slider {
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+}
