@@ -78,3 +78,25 @@
     padding: 20px 10px 0;
   }
 }
+
+
+.page-container.homepage {
+  .home-slider.desktop {
+    display: block;
+  }
+
+  .home-slider.mobile {
+    display: none;
+  }
+
+  @media(max-width:768px) {
+    .home-slider.desktop {
+      display: none;
+    }
+
+    .home-slider.mobile {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }
+}

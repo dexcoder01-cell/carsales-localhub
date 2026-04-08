@@ -1,0 +1,298 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import "./style.scss";
+
+const Gallery = () => {
+  const [car, setCar] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [activeSort, setActiveSort] = useState("Ending soon");
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [selectedYear, setSelectedYear] = useState("Years");
+  const [selectedTrans, setSelectedTrans] = useState("Transmission");
+  const [selectedBody, setSelectedBody] = useState("Body Style");
+  const router = useRouter();
+
+  const yearList = ["2024", "2023", "2022", "2020", "2015", "2010", "2000-1990"];
+  const transmissionList = ["Automatic", "Manual", "Semi-Automatic"];
+  const bodyStyleList = ["Coupe", "Sedan", "Convertible", "SUV", "Truck"];
+
+  // Fetch the most recent car (last entry)
+  useEffect(() => {
+    fetchLatestCar();
+  }, []);
+
+  const fetchLatestCar = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("http://localhost:5000/api/singleCar");
+      const allCars = response.data;
+
+      // Get the most recent car (last entry)
+      const latestCar = allCars[allCars.length - 1];
+
+      setCar(latestCar);
+    } catch (error) {
+      console.error("Error fetching latest car:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get images array from the car
+  const getCarImages = () => {
+    if (!car || !car.images || car.images.length === 0) {
+      return [];
+    }
+    // Map image filenames to full URLs
+    return car.images.map(img => `http://localhost:5000/uploads/${img}`);
+  };
+
+  const images = getCarImages();
+  const mainImage = images[0] || null;
+  const thumbnailImages = images.slice(1, 5); // Next 4 images
+
+  const handleImageClick = () => {
+    if (car && car._id) {
+      router.push(`/car/${car._id}`);
+    }
+  };
+
+  const toggleDropdown = (name) =>
+    setOpenDropdown(openDropdown === name ? null : name);
+
+  // Format time left
+  const formatTimeLeft = () => {
+    if (car?.timeLeft) return car.timeLeft;
+    if (car?.auctionEndDate) {
+      const end = new Date(car.auctionEndDate);
+      const now = new Date();
+      const diff = end - now;
+
+      if (diff <= 0) return "Ended";
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (3600000)) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    return "00:00:00";
+  };
+
+  // Helper function to get specs string for mobile
+  const getSpecsString = () => {
+    const specs = [];
+    if (car?.mileage) specs.push(`${car.mileage.toLocaleString()} miles`);
+    if (car?.transmission) specs.push(car.transmission);
+    if (car?.engine) specs.push(car.engine);
+    if (car?.drivetrain) specs.push(car.drivetrain);
+    return specs.join(" , ");
+  };
+
+  if (loading) {
+    return (
+      <div className="home-slider">
+        <div className="featured-gallery">
+          <div className="loading-placeholder">Loading latest car...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!car || images.length === 0) {
+    return (
+      <div className="home-slider">
+        <div className="featured-gallery">
+          <div className="no-car-placeholder">No cars available</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="home-slider mobile">
+
+      {/* ----------- FEATURED GALLERY SECTION ----------- */}
+      <div className="mobile-main-slider">
+        <div className="featured-gallery">
+          {/* Main Image with Details Overlay */}
+          <div className="main-image-container" onClick={handleImageClick}>
+            <img
+              src={mainImage}
+              alt={car.name || "Car"}
+              className="main-featured-image"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://via.placeholder.com/800x600?text=Image+Not+Found";
+              }}
+            />
+
+            {/* Car Details Overlay - Desktop Only */}
+            <div className="car-details-overlay desktop-only">
+              {car.featured && (
+                <div className="featured-badge">FEATURED</div>
+              )}
+              <h2 className="car-title">{car.name || `${car.make} ${car.model}`}</h2>
+              <p className="car-specs">
+                {car.engine || ""} {car.engine && car.horsepower && "•"} {car.horsepower || ""}
+              </p>
+            </div>
+          </div>
+
+          {/* Thumbnail Grid - 4 Images */}
+          {thumbnailImages.length > 0 && (
+            <div className="thumbnail-grid">
+              {thumbnailImages.map((img, index) => (
+                <div key={index} className="thumbnail-item" onClick={handleImageClick}>
+                  <img
+                    src={img}
+                    alt={`Thumbnail ${index + 1}`}
+                    className="thumbnail-image"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://via.placeholder.com/200x150?text=No+Image";
+                    }}
+                  />
+                </div>
+              ))}
+              {/* If less than 4 images, add placeholder divs */}
+              {Array.from({ length: 4 - thumbnailImages.length }).map((_, index) => (
+                <div key={`placeholder-${index}`} className="thumbnail-item placeholder">
+                  <div className="placeholder-image">No Image</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Details Section - Mobile Only */}
+        <div className="mob-details mobile-only">
+          <h3 className="vehicle-title">{car.year} {car.make} {car.model}</h3>
+          <p className="tags">
+            {car.reserveStatus === "NO RESERVE" && (
+              <span className="tag blue">NO RESERVE</span>
+            )}
+            {car.inspectionStatus === "INSPECTED" && (
+              <span className="tag grey">INSPECTED</span>
+            )}
+            {car.auctionStatus === "Active" && (
+              <span className="tag green">ACTIVE</span>
+            )}
+          </p>
+          <p className="vehicle-specs">{getSpecsString() || "No specs available"}</p>
+          {car.location && (
+            <p className="location">
+              <i className="fa-regular fa-location-dot"></i> {car.location}
+            </p>
+          )}
+        </div>
+      </div>
+      {/* ----------- FILTER BAR (UNTOUCHED) ----------- */}
+      <div className="filters-section">
+        <div className="left-filters">
+
+          <h1>
+            Auctions <i className="fa-solid fa-angle-down"></i>
+          </h1>
+          <div className="dropdowns">
+          
+            <div className="dropdown-box" onClick={() => toggleDropdown("years")}>
+              <div className="filter-item">
+                {selectedYear} <i className="fa-solid fa-angle-down"></i>
+              </div>
+
+              {openDropdown === "years" && (
+                <div className="dropdown-menu">
+                  {yearList.map((y) => (
+                    <div
+                      key={y}
+                      className="dropdown-option"
+                      onClick={() => {
+                        setSelectedYear(y);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {y}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+
+            <div className="dropdown-box" onClick={() => toggleDropdown("trans")}>
+              <div className="filter-item">
+                {selectedTrans} <i className="fa-solid fa-angle-down"></i>
+              </div>
+
+              {openDropdown === "trans" && (
+                <div className="dropdown-menu">
+                  {transmissionList.map((t) => (
+                    <div
+                      key={t}
+                      className="dropdown-option"
+                      onClick={() => {
+                        setSelectedTrans(t);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {t}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+
+            <div className="dropdown-box" onClick={() => toggleDropdown("body")}>
+              <div className="filter-item">
+                {selectedBody} <i className="fa-solid fa-angle-down"></i>
+              </div>
+
+              {openDropdown === "body" && (
+                <div className="dropdown-menu">
+                  {bodyStyleList.map((b) => (
+                    <div
+                      key={b}
+                      className="dropdown-option"
+                      onClick={() => {
+                        setSelectedBody(b);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {b}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* SORTING */}
+        <div className="right-tabs">
+          {[
+            "Ending soon",
+            "Newly listed",
+            "No reserve",
+            "Lowest mileage",
+            "Closest to me",
+          ].map((t) => (
+            <span
+              key={t}
+              className={`tab ${activeSort === t ? "active" : ""}`}
+              onClick={() => setActiveSort(t)}
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Gallery;

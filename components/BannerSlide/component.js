@@ -103,7 +103,7 @@ const Gallery = () => {
   }
 
   return (
-    <div className="home-slider">
+    <div className="home-slider desktop">
 
       {/* ----------- FEATURED GALLERY SECTION ----------- */}
       <div className="featured-gallery">

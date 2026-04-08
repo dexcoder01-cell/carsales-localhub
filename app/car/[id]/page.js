@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { use } from "react";
-import Image from "next/image"; // Import Next.js Image component
+import Image from "next/image";
 
 import VehicleDetails from "../../../components/VehicleDetails/new_component";
 import Header from "../../../components/Header/navbar";
@@ -55,6 +55,28 @@ export default function CarDetail({ params }) {
       fetchCar();
     }
   }, [id]);
+
+  // Prepare images array for mobile gallery
+  const getMobileImages = () => {
+    if (!car?.images) return [];
+    return car.images.map(img => ({
+      src: `http://localhost:5000/uploads/${img}`,
+      filename: img
+    }));
+  };
+
+  const mobileImages = getMobileImages();
+
+  // ========== NEW: Function to get dynamic subtitle for mobile ==========
+  const getMobileSubtitle = () => {
+    const specs = [];
+    if (car?.mileage) specs.push(`${car.mileage.toLocaleString()} Miles`);
+    if (car?.transmission) specs.push(car.transmission);
+    if (car?.engine) specs.push(car.engine);
+    if (car?.horsepower) specs.push(car.horsepower);
+    return specs.join(", ");
+  };
+  // ========== END NEW ==========
 
   const openLightbox = (index) => {
     setIsOpen(true);
@@ -109,110 +131,178 @@ export default function CarDetail({ params }) {
 
       <div className="page-container single-template single-page">
         <div className="main-top">
-          <div className="car-bio">
-            <div className="details">
-              <h2 className="car-title">{car.name}</h2>
-              <div className="sub-details">
-                <p className="tags">
-                  <span className="tag blue">{car.reserveStatus || "NO RESERVE"}</span>
-                  <span className="tag grey">{car.inspectionStatus || "INSPECTED"}</span>
-                </p>
-                {car.shortDescription ? (
-                  <p className="short-description-top">{car.shortDescription}</p>
-                ) : (
-                  car.description && <p>{car.description.substring(0, 100)}...</p>
-                )}
+          
+          {/* ========== MOBILE ONLY SECTION ========== */}
+          <div className="mobile-only">
+            <div className="main-car-section">
+              {/* Gallery */}
+              <div className="gallery-wrapper">
+                <div className="main-image" onClick={() => openLightbox(0)}>
+                  {mobileImages[0] && (
+                    <img src={mobileImages[0].src} alt="Main" />
+                  )}
+                </div>
+                <div className="thumbnail-grid">
+                  {mobileImages.slice(1, 8).map((img, i) => {
+                    const actualIndex = i + 1;
+                    const label = labels[actualIndex];
+
+                    return (
+                      <div
+                        key={i}
+                        className="thumb"
+                        onClick={() => openLightbox(actualIndex)}
+                      >
+                        <img src={img.src} alt={`Thumbnail ${i + 1}`} />
+
+                        {label && label.count > 0 && (
+                          <div className="fixed-label">
+                            {label.name} ({label.count})
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                  {mobileImages.length > 0 && (
+                    <div className="thumb" onClick={openAllPhotos}>
+                      <img src={mobileImages[mobileImages.length - 1].src} alt="All Photos" />
+                      <div className="overlay">
+                        <span>All Photos ({mobileImages.length})</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="btns">
-              <button className="secondary-btn">
-                {/* ✅ Use Star.src for the src attribute */}
-                <img src={Star.src} alt="Star" /> Watch
-              </button>
-              <button className="secondary-btn">
-                {/* ✅ Use Share.src for the src attribute */}
-                <img src={Share.src} alt="Share" /> Share
-              </button>
+
+              {/* Car Info - UPDATED with dynamic subtitle */}
+              <div className="car-bio">
+                <div className="details">
+                  <h2>{car.year} {car.make} {car.model}</h2>
+                  {/* ========== CHANGED: Dynamic subtitle here ========== */}
+                  <div className="sub-details">
+                    <p>{getMobileSubtitle() || car.engine || "Vehicle specifications not available"}</p>
+                  </div>
+                  {/* ========== END CHANGE ========== */}
+                </div>
+              </div>
+
+              {/* Carfax & Share */}
+              <div className="carfax-header">
+                <span className="ending">
+                  {car.auctionStatus === "Ended" ? "Ended" : "Ends"} {formatDate(car.auctionEndDate || car.createdAt)} at {formatTime(car.auctionEndDate || car.createdAt)}
+                </span>
+                <img src={carfax.src} alt="Carfax" />
+                <button className="secondary-btn">
+                  Share <i className="fa-solid fa-arrow-up-from-bracket"></i>
+                </button>
+              </div>
             </div>
           </div>
-
-          {/* Gallery */}
-          <div className="gallery-wrapper">
-            {car.images && car.images.length > 0 && (
-              <div className="main-image" onClick={() => openLightbox(0)}>
-                <img
-                  src={`http://localhost:5000/uploads/${car.images[0]}`}
-                  alt="Main"
-                  onError={(e) => (e.target.src = "https://via.placeholder.com/800x600?text=Image+Not+Found")}
-                />
+          {/* ========== END MOBILE ONLY SECTION ========== */}
+          <div className="desktop-only">
+            <div className="car-bio">
+              <div className="details">
+                <h2 className="car-title">{car.name}</h2>
+                <div className="sub-details">
+                  <p className="tags">
+                    <span className="tag blue">{car.reserveStatus || "NO RESERVE"}</span>
+                    <span className="tag grey">{car.inspectionStatus || "INSPECTED"}</span>
+                  </p>
+                  {car.shortDescription ? (
+                    <p className="short-description-top">{car.shortDescription}</p>
+                  ) : (
+                    car.description && <p>{car.description.substring(0, 100)}...</p>
+                  )}
+                </div>
               </div>
-            )}
+              <div className="btns">
+                <button className="secondary-btn">
+                  <img src={Star.src} alt="Star" /> Watch
+                </button>
+                <button className="secondary-btn">
+                  <img src={Share.src} alt="Share" /> Share
+                </button>
+              </div>
+            </div>
 
-            <div className="thumbnail-grid">
-              {car.images?.slice(1, 8).map((image, i) => {
-                const actualIndex = i + 1;
-                const label = labels[actualIndex];
-                return (
-                  <div key={i} className="thumb thumb-img" onClick={() => openLightbox(actualIndex)}>
-                    <img
-                      src={`http://localhost:5000/uploads/${image}`}
-                      alt={`Thumbnail ${i + 1}`}
-                      onError={(e) => (e.target.src = "https://via.placeholder.com/200x150?text=Image+Not+Found")}
-                    />
-                    {label && label.count > 0 && <div className="fixed-label">{label.name} ({label.count})</div>}
+            {/* Gallery */}
+            <div className="gallery-wrapper">
+              {car.images && car.images.length > 0 && (
+                <div className="main-image" onClick={() => openLightbox(0)}>
+                  <img
+                    src={`http://localhost:5000/uploads/${car.images[0]}`}
+                    alt="Main"
+                    onError={(e) => (e.target.src = "https://via.placeholder.com/800x600?text=Image+Not+Found")}
+                  />
+                </div>
+              )}
+
+              <div className="thumbnail-grid">
+                {car.images?.slice(1, 8).map((image, i) => {
+                  const actualIndex = i + 1;
+                  const label = labels[actualIndex];
+                  return (
+                    <div key={i} className="thumb thumb-img" onClick={() => openLightbox(actualIndex)}>
+                      <img
+                        src={`http://localhost:5000/uploads/${image}`}
+                        alt={`Thumbnail ${i + 1}`}
+                        onError={(e) => (e.target.src = "https://via.placeholder.com/200x150?text=Image+Not+Found")}
+                      />
+                      {label && label.count > 0 && <div className="fixed-label">{label.name} ({label.count})</div>}
+                    </div>
+                  );
+                })}
+
+                <div className="thumb" onClick={openAllPhotos}>
+                  <img
+                    src={`http://localhost:5000/uploads/${car.images[car.images.length - 1]}`}
+                    alt="All Photos"
+                    onError={(e) => (e.target.src = "https://via.placeholder.com/200x150?text=View+All")}
+                  />
+                  <div className="overlay">
+                    <span>All Photos ({car.images?.length || 0})</span>
                   </div>
-                );
-              })}
-
-              <div className="thumb" onClick={openAllPhotos}>
-                <img
-                  src={`http://localhost:5000/uploads/${car.images[car.images.length - 1]}`}
-                  alt="All Photos"
-                  onError={(e) => (e.target.src = "https://via.placeholder.com/200x150?text=View+All")}
-                />
-                <div className="overlay">
-                  <span>All Photos ({car.images?.length || 0})</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Breadcrumb */}
-          <div className="breadcrumb">
-            <ul>
-              <li><a href="/cars">Auctions</a></li>
-              {/* ✅ Use Right.src for the src attribute */}
-              <img src={Right.src} alt="Right" />
-              <li><a href="#">{car.transmission || "Transmission"}</a></li>
-              <img src={Right.src} alt="Right" />
-              <li><a href="#">{car.make || "Make"}</a></li>
-              <img src={Right.src} alt="Right" />
-              <li><a href="#">{car.model || "Model"}</a></li>
-              <img src={Right.src} alt="Right" />
-              <li><a href="#">{car.year || "Year"}</a></li>
-            </ul>
-          </div>
-
-          {/* Auction Details */}
-          <div className="auction-bar">
-            <div className="auction-highlight">
-              <div className="time-left"><span>Time Left:</span> {car.timeLeft || "11:26:10"}</div>
-              <div className="high-bid"><span>High Bid:</span> ${car.highBid || car.price || "9,800"}</div>
-              <div className="bids"><span>Bids:</span> {car.bidCount || 14}</div>
-              <div className="comments"><span>Comments:</span> {car.commentCount || 20}</div>
+            {/* Breadcrumb */}
+            <div className="breadcrumb">
+              <ul>
+                <li><a href="/cars">Auctions</a></li>
+                <img src={Right.src} alt="Right" />
+                <li><a href="#">{car.transmission || "Transmission"}</a></li>
+                <img src={Right.src} alt="Right" />
+                <li><a href="#">{car.make || "Make"}</a></li>
+                <img src={Right.src} alt="Right" />
+                <li><a href="#">{car.model || "Model"}</a></li>
+                <img src={Right.src} alt="Right" />
+                <li><a href="#">{car.year || "Year"}</a></li>
+              </ul>
             </div>
-            <button className="place-bid btn">Place Bid</button>
-          </div>
 
-          <div className="carfax-header">
-            {/* ✅ Use carfax.src for the src attribute */}
-            <img src={carfax.src} alt="Carfax" />
-            <span className="ending">
-              {car.auctionStatus === "Ended" ? "Ended" : "Ends"} {formatDate(car.auctionEndDate || car.createdAt)} at {formatTime(car.auctionEndDate || car.createdAt)}
-            </span>
-          </div>
+            {/* Auction Details */}
+            <div className="auction-bar">
+              <div className="auction-highlight">
+                <div className="time-left"><span>Time Left:</span> {car.timeLeft || "11:26:10"}</div>
+                <div className="high-bid"><span>High Bid:</span> ${car.highBid || car.price || "9,800"}</div>
+                <div className="bids"><span>Bids:</span> {car.bidCount || 14}</div>
+                <div className="comments"><span>Comments:</span> {car.commentCount || 20}</div>
+              </div>
+              <button className="place-bid btn">Place Bid</button>
+            </div>
 
-          {/* Lightbox */}
+            <div className="carfax-header">
+              <img src={carfax.src} alt="Carfax" />
+              <span className="ending">
+                {car.auctionStatus === "Ended" ? "Ended" : "Ends"} {formatDate(car.auctionEndDate || car.createdAt)} at {formatTime(car.auctionEndDate || car.createdAt)}
+              </span>
+            </div>
+          </div>
+          {/* ========== END DESKTOP ONLY SECTION ========== */}
+
+          {/* Lightbox - Shared for both mobile and desktop */}
           {isOpen && (
             <div className="lightbox" onClick={closeLightbox}>
               <span className="close">&times;</span>
@@ -227,7 +317,7 @@ export default function CarDetail({ params }) {
             </div>
           )}
 
-          {/* All Photos Modal */}
+          {/* All Photos Modal - Shared for both mobile and desktop */}
           {showAllPhotos && (
             <div className="all-photos-overlay">
               <div className="all-photos-header">

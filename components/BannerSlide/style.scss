@@ -206,6 +206,13 @@
 /* DROPDOWN CONTAINER */
 .dropdown-box {
   position: relative;
+  width: inherit;
+}
+
+.dropdowns {
+  display: flex;
+  width: 100%;
+  gap: 10px;
 }
 
 /* Button */
@@ -299,6 +306,7 @@
 @media (max-width: 768px) {
   .featured-gallery {
     flex-direction: column;
+    margin-bottom: 5px;
 
     .main-image-container {
       .main-featured-image {
@@ -322,6 +330,10 @@
           font-size: 18px;
         }
       }
+
+      .car-details-overlay.desktop-only {
+        display: none;
+      }
     }
 
     .thumbnail-grid {
@@ -333,6 +345,10 @@
         width: calc(25% - 7.5px);
       }
     }
+  }
+
+  .mobile-main-slider {
+    padding-bottom: 20px;
   }
 }
 
