@@ -27,7 +27,7 @@ const Gallery = () => {
   const fetchLatestCar = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/api/singleCar");
+      const response = await axios.get("/api/singleCar");
       const allCars = response.data;
       
       // Get the most recent car (last entry)

@@ -17,7 +17,7 @@ export default function CarsPage() {
 
   const fetchCars = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/singleCar");
+      const response = await axios.get("/api/singleCar");
       setCars(response.data);
     } catch (error) {
       console.error("Error fetching cars:", error);
