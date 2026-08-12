@@ -91,7 +91,7 @@ const Gallery = () => {
     return (
       <div className="home-slider">
         <div className="featured-gallery">
-          <div className="loading-placeholder">Loading latest car...</div>
+          <div className="loading-placeholder"> ABC Loading latest car...</div>
         </div>
       </div>
     );
@@ -101,7 +101,7 @@ const Gallery = () => {
     return (
       <div className="home-slider">
         <div className="featured-gallery">
-          <div className="no-car-placeholder">No cars available</div>
+          <div className="no-car-placeholder">No ABC cars available</div>
         </div>
       </div>
     );
