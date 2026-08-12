@@ -19,7 +19,6 @@ const Gallery = () => {
   const transmissionList = ["Automatic", "Manual", "Semi-Automatic"];
   const bodyStyleList = ["Coupe", "Sedan", "Convertible", "SUV", "Truck"];
 
-  // Fetch the most recent car (last entry)
   useEffect(() => {
     fetchLatestCar();
   }, []);
@@ -29,10 +28,7 @@ const Gallery = () => {
       setLoading(true);
       const response = await axios.get("/api/singleCar");
       const allCars = response.data;
-
-      // Get the most recent car (last entry)
       const latestCar = allCars[allCars.length - 1];
-
       setCar(latestCar);
     } catch (error) {
       console.error("Error fetching latest car:", error);
@@ -41,18 +37,28 @@ const Gallery = () => {
     }
   };
 
-  // Get images array from the car
   const getCarImages = () => {
-    if (!car || !car.images || car.images.length === 0) {
-      return [];
+    if (!car) return [];
+    
+    let imagesArray = car.images;
+    if (typeof imagesArray === 'string') {
+      try {
+        imagesArray = JSON.parse(imagesArray);
+      } catch {
+        imagesArray = [];
+      }
     }
-    // Map image filenames to full URLs
-    return car.images.map(img => `http://localhost:5000/uploads/${img}`);
+    
+    if (!Array.isArray(imagesArray)) {
+      imagesArray = [];
+    }
+    
+    return imagesArray.map(img => `/uploads/${img}`);
   };
 
   const images = getCarImages();
   const mainImage = images[0] || null;
-  const thumbnailImages = images.slice(1, 5); // Next 4 images
+  const thumbnailImages = images.slice(1, 5);
 
   const handleImageClick = () => {
     if (car && car._id) {
@@ -63,7 +69,6 @@ const Gallery = () => {
   const toggleDropdown = (name) =>
     setOpenDropdown(openDropdown === name ? null : name);
 
-  // Format time left
   const formatTimeLeft = () => {
     if (car?.timeLeft) return car.timeLeft;
     if (car?.auctionEndDate) {
@@ -82,7 +87,6 @@ const Gallery = () => {
     return "00:00:00";
   };
 
-  // Helper function to get specs string for mobile
   const getSpecsString = () => {
     const specs = [];
     if (car?.mileage) specs.push(`${car.mileage.toLocaleString()} miles`);
@@ -114,12 +118,9 @@ const Gallery = () => {
 
   return (
     <div className="home-slider mobile">
-
-      {/* ----------- FEATURED GALLERY SECTION ----------- */}
       <div className="mobile-main-slider">
-        <div className="featured-gallery">
-          {/* Main Image with Details Overlay */}
-          <div className="main-image-container" onClick={handleImageClick}>
+        <div className="featured-gallery" onClick={handleImageClick} style={{ cursor: "pointer" }}>
+          <div className="main-image-container">
             <img
               src={mainImage}
               alt={car.name || "Car"}
@@ -130,7 +131,6 @@ const Gallery = () => {
               }}
             />
 
-            {/* Car Details Overlay - Desktop Only */}
             <div className="car-details-overlay desktop-only">
               {car.featured && (
                 <div className="featured-badge">FEATURED</div>
@@ -142,11 +142,10 @@ const Gallery = () => {
             </div>
           </div>
 
-          {/* Thumbnail Grid - 4 Images */}
           {thumbnailImages.length > 0 && (
             <div className="thumbnail-grid">
               {thumbnailImages.map((img, index) => (
-                <div key={index} className="thumbnail-item" onClick={handleImageClick}>
+                <div key={index} className="thumbnail-item">
                   <img
                     src={img}
                     alt={`Thumbnail ${index + 1}`}
@@ -158,7 +157,6 @@ const Gallery = () => {
                   />
                 </div>
               ))}
-              {/* If less than 4 images, add placeholder divs */}
               {Array.from({ length: 4 - thumbnailImages.length }).map((_, index) => (
                 <div key={`placeholder-${index}`} className="thumbnail-item placeholder">
                   <div className="placeholder-image">No Image</div>
@@ -168,7 +166,6 @@ const Gallery = () => {
           )}
         </div>
 
-        {/* Mobile Details Section - Mobile Only */}
         <div className="mob-details mobile-only">
           <h3 className="vehicle-title">{car.year} {car.make} {car.model}</h3>
           <p className="tags">
@@ -190,20 +187,17 @@ const Gallery = () => {
           )}
         </div>
       </div>
-      {/* ----------- FILTER BAR (UNTOUCHED) ----------- */}
+
       <div className="filters-section">
         <div className="left-filters">
-
           <h1>
             Auctions <i className="fa-solid fa-angle-down"></i>
           </h1>
           <div className="dropdowns">
-          
             <div className="dropdown-box" onClick={() => toggleDropdown("years")}>
               <div className="filter-item">
                 {selectedYear} <i className="fa-solid fa-angle-down"></i>
               </div>
-
               {openDropdown === "years" && (
                 <div className="dropdown-menu">
                   {yearList.map((y) => (
@@ -222,12 +216,10 @@ const Gallery = () => {
               )}
             </div>
 
-
             <div className="dropdown-box" onClick={() => toggleDropdown("trans")}>
               <div className="filter-item">
                 {selectedTrans} <i className="fa-solid fa-angle-down"></i>
               </div>
-
               {openDropdown === "trans" && (
                 <div className="dropdown-menu">
                   {transmissionList.map((t) => (
@@ -246,12 +238,10 @@ const Gallery = () => {
               )}
             </div>
 
-
             <div className="dropdown-box" onClick={() => toggleDropdown("body")}>
               <div className="filter-item">
                 {selectedBody} <i className="fa-solid fa-angle-down"></i>
               </div>
-
               {openDropdown === "body" && (
                 <div className="dropdown-menu">
                   {bodyStyleList.map((b) => (
@@ -272,7 +262,6 @@ const Gallery = () => {
           </div>
         </div>
 
-        {/* SORTING */}
         <div className="right-tabs">
           {[
             "Ending soon",

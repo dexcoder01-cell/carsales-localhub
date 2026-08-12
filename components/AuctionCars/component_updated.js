@@ -17,7 +17,7 @@ export default function AuctionCars() {
 
   const fetchCars = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/singleCar");
+      const res = await axios.get("/api/singleCar");
       setVehicles(res.data);
     } catch (err) {
       console.error("Error fetching cars:", err);
@@ -89,7 +89,7 @@ export default function AuctionCars() {
               <div className="vehicle-img">
                 {car.images?.length > 0 ? (
                   <img
-                    src={`http://localhost:5000/uploads/${car.images[0]}`}
+                    src={`/uploads/${car.images[0]}`}
                     alt={car.name || "Car image"}
                     className="car-image"
                     style={{ width: '100%', height: '250px', objectFit: 'cover' }}
@@ -103,18 +103,6 @@ export default function AuctionCars() {
                     No Image Available
                   </div>
                 )}
-
-                {/* Featured Badge */}
-                {/* {car.featured && (
-                  <span className="featured-badge">FEATURED</span>
-                )} */}
-                
-                {/* Show NO RESERVE badge on image if reserveStatus is NO RESERVE */}
-                {/* {car.reserveStatus === "NO RESERVE" && !car.featured && (
-                  <span className="featured-badge" style={{ background: "#4CAF50" }}>
-                    NO RESERVE
-                  </span>
-                )} */}
               </div>
 
               {/* Time + Bid */}
@@ -161,28 +149,9 @@ export default function AuctionCars() {
                 <i className="fa-regular fa-location-dot"></i> {car.location}
               </p>
             )}
-            
-            {/* Optional: Show bid count and comments count */}
-            {/* {(car.bidCount > 0 || car.commentCount > 0) && (
-              <div className="bid-comment-stats">
-                {car.bidCount > 0 && (
-                  <span>
-                    <i className="fa-solid fa-hashtag"></i> {car.bidCount} bids
-                  </span>
-                )}
-                {car.commentCount > 0 && (
-                  <span>
-                    <i className="fa-regular fa-comment"></i> {car.commentCount} comments
-                  </span>
-                )}
-              </div>
-            )} */}
           </div>
         ))}
       </div>
-
-      {/* KEEP THIS AS IT IS */}
-      {/* <AuctionNewCars /> */}
     </div>
   );
 }

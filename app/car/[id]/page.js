@@ -33,7 +33,7 @@ export default function CarDetail({ params }) {
     const fetchCar = async () => {
       try {
         console.log("Fetching car with ID:", id);
-        const res = await axios.get(`http://localhost:5000/api/singleCar/${id}`);
+        const res = await axios.get(`/api/singleCar/${id}`);
         console.log("Response:", res.data);
 
         const data = res.data;
@@ -60,7 +60,7 @@ export default function CarDetail({ params }) {
   const getMobileImages = () => {
     if (!car?.images) return [];
     return car.images.map(img => ({
-      src: `http://localhost:5000/uploads/${img}`,
+      src: `/uploads/${img}`,
       filename: img
     }));
   };
@@ -231,7 +231,7 @@ export default function CarDetail({ params }) {
               {car.images && car.images.length > 0 && (
                 <div className="main-image" onClick={() => openLightbox(0)}>
                   <img
-                    src={`http://localhost:5000/uploads/${car.images[0]}`}
+                    src={`/uploads/${car.images[0]}`}
                     alt="Main"
                     onError={(e) => (e.target.src = "https://via.placeholder.com/800x600?text=Image+Not+Found")}
                   />
@@ -245,7 +245,7 @@ export default function CarDetail({ params }) {
                   return (
                     <div key={i} className="thumb thumb-img" onClick={() => openLightbox(actualIndex)}>
                       <img
-                        src={`http://localhost:5000/uploads/${image}`}
+                        src={`/uploads/${image}`}
                         alt={`Thumbnail ${i + 1}`}
                         onError={(e) => (e.target.src = "https://via.placeholder.com/200x150?text=Image+Not+Found")}
                       />
@@ -256,7 +256,7 @@ export default function CarDetail({ params }) {
 
                 <div className="thumb" onClick={openAllPhotos}>
                   <img
-                    src={`http://localhost:5000/uploads/${car.images[car.images.length - 1]}`}
+                    src={`/uploads/${car.images[car.images.length - 1]}`}
                     alt="All Photos"
                     onError={(e) => (e.target.src = "https://via.placeholder.com/200x150?text=View+All")}
                   />
@@ -308,7 +308,7 @@ export default function CarDetail({ params }) {
               <span className="close">&times;</span>
               <span className="prev" onClick={prevImage}>&#10094;</span>
               <img
-                src={`http://localhost:5000/uploads/${car.images[currentIndex]}`}
+                src={`/uploads/${car.images[currentIndex]}`}
                 alt="enlarged"
                 className="lightbox-img"
                 onError={(e) => (e.target.src = "https://via.placeholder.com/800x600?text=Image+Not+Found")}
@@ -343,7 +343,7 @@ export default function CarDetail({ params }) {
                   return (
                     <div key={idx} className="photo-item" onClick={() => { openLightbox(car.images.indexOf(imageSrc)); closeAllPhotos(); }}>
                       <img
-                        src={`http://localhost:5000/uploads/${imageSrc}`}
+                        src={`/uploads/${imageSrc}`}
                         alt={`Photo ${idx}`}
                         onError={(e) => (e.target.src = "https://via.placeholder.com/250x200?text=Image+Not+Found")}
                       />

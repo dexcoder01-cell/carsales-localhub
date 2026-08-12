@@ -11,7 +11,7 @@ export default function CarsPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {details
+  useEffect(() => {
     fetchCars();
   }, []);
 
@@ -74,7 +74,7 @@ export default function CarsPage() {
               {/* Image */}
               {car.images?.length > 0 && (
                 <img
-                  src={`http://localhost:5000/uploads/${car.images[0]}`}
+                  src={`/uploads/${car.images[0]}`}
                   alt={car.name}
                   style={{ width: "100%", height: "150px", objectFit: "cover" }}
                 />

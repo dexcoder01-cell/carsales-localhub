@@ -19,7 +19,6 @@ const Gallery = () => {
   const transmissionList = ["Automatic", "Manual", "Semi-Automatic"];
   const bodyStyleList = ["Coupe", "Sedan", "Convertible", "SUV", "Truck"];
 
-  // Fetch the most recent car (last entry)
   useEffect(() => {
     fetchLatestCar();
   }, []);
@@ -29,10 +28,7 @@ const Gallery = () => {
       setLoading(true);
       const response = await axios.get("/api/singleCar");
       const allCars = response.data;
-      
-      // Get the most recent car (last entry)
       const latestCar = allCars[allCars.length - 1];
-      
       setCar(latestCar);
     } catch (error) {
       console.error("Error fetching latest car:", error);
@@ -41,18 +37,28 @@ const Gallery = () => {
     }
   };
 
-  // Get images array from the car
   const getCarImages = () => {
-    if (!car || !car.images || car.images.length === 0) {
-      return [];
+    if (!car) return [];
+    
+    let imagesArray = car.images;
+    if (typeof imagesArray === 'string') {
+      try {
+        imagesArray = JSON.parse(imagesArray);
+      } catch {
+        imagesArray = [];
+      }
     }
-    // Map image filenames to full URLs
-    return car.images.map(img => `http://localhost:5000/uploads/${img}`);
+    
+    if (!Array.isArray(imagesArray)) {
+      imagesArray = [];
+    }
+    
+    return imagesArray.map(img => `/uploads/${img}`);
   };
 
   const images = getCarImages();
   const mainImage = images[0] || null;
-  const thumbnailImages = images.slice(1, 5); // Next 4 images
+  const thumbnailImages = images.slice(1, 5);
 
   const handleImageClick = () => {
     if (car && car._id) {
@@ -63,7 +69,6 @@ const Gallery = () => {
   const toggleDropdown = (name) =>
     setOpenDropdown(openDropdown === name ? null : name);
 
-  // Format time left
   const formatTimeLeft = () => {
     if (car?.timeLeft) return car.timeLeft;
     if (car?.auctionEndDate) {
@@ -106,9 +111,9 @@ const Gallery = () => {
     <div className="home-slider desktop">
 
       {/* ----------- FEATURED GALLERY SECTION ----------- */}
-      <div className="featured-gallery">
+      <div className="featured-gallery" onClick={handleImageClick} style={{ cursor: "pointer" }}>
         {/* Main Image with Details Overlay */}
-        <div className="main-image-container" onClick={handleImageClick}>
+        <div className="main-image-container">
           <img
             src={mainImage}
             alt={car.name || "Car"}
@@ -128,15 +133,6 @@ const Gallery = () => {
             <p className="car-specs">
               {car.engine || ""} {car.engine && car.horsepower && "•"} {car.horsepower || ""}
             </p>
-            {/* <p className="car-model-trim">{car.model || car.make}</p> */}
-            {/* <div className="auction-info">
-              <div className="time-left">
-                <i className="fa-regular fa-clock"></i> {formatTimeLeft()}
-              </div>
-              <div className="bid-amount">
-                ${(car.highBid || car.price || 0).toLocaleString()}
-              </div>
-            </div> */}
           </div>
         </div>
 
@@ -144,7 +140,7 @@ const Gallery = () => {
         {thumbnailImages.length > 0 && (
           <div className="thumbnail-grid">
             {thumbnailImages.map((img, index) => (
-              <div key={index} className="thumbnail-item" onClick={handleImageClick}>
+              <div key={index} className="thumbnail-item">
                 <img
                   src={img}
                   alt={`Thumbnail ${index + 1}`}
