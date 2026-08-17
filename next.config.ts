@@ -10,19 +10,8 @@ const nextConfig: NextConfig = {
     ],
     unoptimized: true,
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-      };
-    }
-    return config;
+  turbopack: {
   },
-  experimental: {
-    optimizeCss: true,
-  },
-  transpilePackages: ['tailwindcss'],
 };
 
 export default nextConfig;
