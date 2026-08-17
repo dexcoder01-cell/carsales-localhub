@@ -11,7 +11,7 @@ const Header = () => {
     <header className="main-header">
       <div className="header-left">
         <div className="logo">
-          <span className="logo-black">cars</span>
+          <span className="logo-black">TESTINGcars</span>
           <span className="logo-green">&</span>
           <span className="logo-black">bids</span>
         </div>
